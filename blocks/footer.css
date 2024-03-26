@@ -1,0 +1,21 @@
+.footer {
+  margin-top: 67px;
+  margin-bottom: 60px;
+  box-sizing: border-box;
+}
+
+.footer__copyright {
+  color: #545454;
+  font-weight: 400;
+  font-family: Inter, Arial, sans-serif;
+  line-height: 1.2;
+  font-size: 18px;
+  position: relative;
+  display: block;
+}
+
+@media screen and (max-width: 880px) {
+  .footer {
+    margin: 0 auto;
+  }
+}
