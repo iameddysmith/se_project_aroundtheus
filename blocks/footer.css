@@ -1,7 +1,7 @@
 .footer {
   margin-top: 67px;
   margin-bottom: 60px;
-  box-sizing: border-box;
+  max-width: 880px;
 }
 
 .footer__copyright {
@@ -10,12 +10,13 @@
   font-family: Inter, Arial, sans-serif;
   line-height: 1.2;
   font-size: 18px;
-  position: relative;
-  display: block;
 }
 
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 896px) {
   .footer {
-    margin: 0 auto;
+    margin-top: 48px;
+    margin-bottom: 36px;
+    padding-left: 48px;
+    position: relative;
   }
 }

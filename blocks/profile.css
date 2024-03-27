@@ -72,9 +72,16 @@
   width: 120px;
   border-radius: 50%;
   margin-right: 24px;
+  object-fit: cover;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
+  .profile__add-button {
+    width: 10vw;
+  }
+}
+
+@media screen and (max-width: 720px) {
   .profile {
     flex-direction: column;
     padding-top: 42px;

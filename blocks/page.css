@@ -12,9 +12,16 @@
   margin: 0 auto;
 }
 
-.page__content {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  box-sizing: border-box;
+@media screen and (max-width: 920px) {
+  .page__section {
+    padding: 0 28px;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 653px) {
+  .page {
+    margin-top: 28px;
+    padding: 0;
+  }
 }
