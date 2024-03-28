@@ -30,5 +30,10 @@ This is a project entitled 'Around the U.S.' My third project in the TripleTen S
 - Utilizing GitHub as a save point tool
 - Using BEM methodology for a cleaner, logic-based way of designing the webpage
 
-[Link to project overview Video](https://youtu.be/zGkqc2O4Mm8)
-[Link to the published site on GitHub](https://iameddysmith.github.io/se_project_aroundtheus/)
+**Project Overview**
+
+- [Link to project overview Video](https://youtu.be/zGkqc2O4Mm8)
+
+**GitHub**
+
+- [Link to the published site on GitHub](https://iameddysmith.github.io/se_project_aroundtheus/)
