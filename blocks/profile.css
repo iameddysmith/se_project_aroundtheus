@@ -65,6 +65,10 @@
   font-weight: 400;
   grid-area: description;
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 375px;
 }
 
 .profile__image {
@@ -111,6 +115,7 @@
     line-height: 1.1;
     margin-bottom: 36px;
     margin-top: 14px;
+    max-width: 282px;
   }
 
   .profile__add-button {
