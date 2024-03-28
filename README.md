@@ -32,7 +32,7 @@ This is a project entitled 'Around the U.S.' My third project in the TripleTen S
 
 **Project Overview**
 
-- [Link to project overview Video](https://youtu.be/zGkqc2O4Mm8)
+- [Link to project overview video](https://youtu.be/zGkqc2O4Mm8)
 
 **GitHub**
 
