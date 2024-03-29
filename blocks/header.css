@@ -9,21 +9,14 @@
 
 @media screen and (max-width: 720px) {
   .header__logo {
-    margin-left: 28px;
+    margin-left: 27px;
   }
 }
 
 @media screen and (max-width: 620px) {
   .header__logo {
+    margin-bottom: 32px;
     width: 126px;
     height: 24px;
-    margin-bottom: 32px;
-    margin-left: 28px;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .header__logo {
-    margin-left: 27px;
   }
 }
