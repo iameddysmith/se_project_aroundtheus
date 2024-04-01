@@ -39,7 +39,7 @@
   line-height: 1.2;
 }
 
-.modal__close__button {
+.modal-close__button {
   background-image: url("../images/modal_close-button.svg");
   height: 40px;
   width: 40px;
@@ -57,7 +57,7 @@
   max-width: 100%;
 }
 
-.modal__form__input {
+.modal-form__input {
   width: 100%;
   height: 27px;
   margin-bottom: 30px;
@@ -72,11 +72,11 @@
   box-sizing: border-box;
 }
 
-.modal__form__input:last-of-type {
+.modal-form__input:last-of-type {
   margin-bottom: 48px;
 }
 
-.modal__save__button {
+.modal-save__button {
   width: 100%;
   color: #fff;
   background-color: #000;
@@ -91,7 +91,7 @@
 }
 
 @media screen and (max-width: 720px) {
-  .modal__close__button {
+  .modal-close__button {
     height: 26px;
     width: 26px;
     bottom: calc(100% + 13px);
@@ -111,7 +111,7 @@
     font-size: 18px;
   }
 
-  .modal__save__button {
+  .modal-save__button {
     font-size: 14px;
   }
 }
