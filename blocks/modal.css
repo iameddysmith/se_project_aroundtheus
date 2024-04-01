@@ -39,7 +39,7 @@
   line-height: 1.2;
 }
 
-.modal-close__button {
+.modal__close_button {
   background-image: url("../images/modal_close-button.svg");
   height: 40px;
   width: 40px;
@@ -91,7 +91,7 @@
 }
 
 @media screen and (max-width: 720px) {
-  .modal-close__button {
+  .modal__close_button {
     height: 26px;
     width: 26px;
     bottom: calc(100% + 13px);
