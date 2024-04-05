@@ -13,7 +13,7 @@
   font-family: Inter, Arial, Helvitica, sans-serif;
 }
 
-.modal__open {
+.modal_open {
   display: flex;
 }
 
