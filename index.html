@@ -38,6 +38,7 @@
           </div>
           <button
             class="profile__add-button"
+            id="places-add-btn"
             type="button"
             aria-label="Add New Location"
           ></button>
@@ -50,6 +51,7 @@
         <p class="footer__copyright">&#169; 2022 Around The U.S.</p>
       </footer>
     </div>
+    <!-- Profile Name Modal -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close-button" id="modal-close-btn"></button>
@@ -70,6 +72,30 @@
             id="profile-description-input"
           />
           <button class="modal__save-button">Save</button>
+        </form>
+      </div>
+    </div>
+    <!-- Add Place Modal -->
+    <div class="modal" id="places-add-modal">
+      <div class="modal__container">
+        <button class="modal__close-button" id="modal-close-btn"></button>
+        <p class="modal__heading">New Place</p>
+        <form class="modal__form" id="add-card-form">
+          <input
+            type="text"
+            name="title"
+            class="modal__form-input"
+            placeholder="Title"
+            id="place-title-input"
+          />
+          <input
+            type="text"
+            name="url"
+            class="modal__form-input"
+            placeholder="Image URL"
+            id="card-url-input"
+          />
+          <button class="modal__save-button">Create</button>
         </form>
       </div>
     </div>
