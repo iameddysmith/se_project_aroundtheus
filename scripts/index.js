@@ -40,10 +40,14 @@ const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
 );
 const profileEditForm = profileEditModal.querySelector("#profile-form");
+
 /* Places */
 const placesAddBtn = document.querySelector("#places-add-btn");
 const placesAddModal = document.querySelector("#places-add-modal");
 const placesModalCloseBtn = placesAddModal.querySelector("#modal-close-btn");
+const placeTitleInput = document.querySelector("#place-title-input");
+const placeUrlInput = document.querySelector("#place-url-input");
+const placeAddForm = placesAddModal.querySelector("#add-place-form");
 
 /* Cards */
 const cardListEl = document.querySelector(".cards__list");
@@ -67,6 +71,11 @@ function getCardElement(cardData) {
   cardImageEl.alt = cardData.name;
   return cardElement;
 }
+
+function renderCard(cardData) {
+  const cardElement = getCardElement(cardData);
+  cardListEl.prepend(cardElement);
+}
 /* -------------------------------------------------------------------------- */
 /*                               Event Handlers                               */
 /* -------------------------------------------------------------------------- */
@@ -76,6 +85,18 @@ function handleProfileEditSubmit(e) {
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   closeModal(profileEditModal);
+}
+
+function handleNewPlaceSubmit(e) {
+  e.preventDefault();
+  const name = placeTitleInput.value;
+  const link = placeUrlInput.value;
+  const cardElement = getCardElement({
+    name,
+    link,
+  });
+  cardListEl.prepend(cardElement);
+  closeModal(placesAddModal);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -100,6 +121,8 @@ placesAddBtn.addEventListener("click", () => {
 placesModalCloseBtn.addEventListener("click", () => {
   closeModal(placesAddModal);
 });
+
+placeAddForm.addEventListener("submit", handleNewPlaceSubmit);
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
