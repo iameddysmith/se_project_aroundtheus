@@ -67,9 +67,14 @@ function getCardElement(cardData) {
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeReactBtn = cardElement.querySelector(".card__react-button");
+  const deleteActionBtn = cardElement.querySelector(".card__delete-button");
 
   likeReactBtn.addEventListener("click", () => {
     likeReactBtn.classList.toggle("card__react-button_active");
+  });
+
+  deleteActionBtn.addEventListener("click", () => {
+    cardElement.remove();
   });
 
   cardTitleEl.textContent = cardData.name;
@@ -109,6 +114,11 @@ function handleNewPlaceSubmit(e) {
   closeModal(placesAddModal);
 }
 
+function handlePlaceDelete(e) {
+  e.preventDefault();
+  /* cardElement.remove(cardData); */
+}
+
 /* -------------------------------------------------------------------------- */
 /*                               Event Listeners                              */
 /* -------------------------------------------------------------------------- */
@@ -132,7 +142,6 @@ placesModalCloseBtn.addEventListener("click", () => {
   resetPlaceForm(placeAddForm);
   closeModal(placesAddModal);
 });
-
 placeAddForm.addEventListener("submit", handleNewPlaceSubmit);
 
 /* ---------------------------------- Cards --------------------------------- */
