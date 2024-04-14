@@ -29,7 +29,7 @@ const initialCards = [
 /*                                  Elements                                  */
 /* -------------------------------------------------------------------------- */
 
-/* Profile */
+/* --------------------------------- Profile -------------------------------- */
 const profileEditBtn = document.querySelector("#profile-edit-btn");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileModalCloseBtn = profileEditModal.querySelector("#modal-close-btn");
@@ -41,7 +41,7 @@ const profileDescriptionInput = document.querySelector(
 );
 const profileEditForm = profileEditModal.querySelector("#profile-form");
 
-/* Places */
+/* --------------------------------- Places --------------------------------- */
 const placesAddBtn = document.querySelector("#places-add-btn");
 const placesAddModal = document.querySelector("#places-add-modal");
 const placesModalCloseBtn = placesAddModal.querySelector("#modal-close-btn");
@@ -49,7 +49,7 @@ const placeTitleInput = document.querySelector("#place-title-input");
 const placeUrlInput = document.querySelector("#place-url-input");
 const placeAddForm = placesAddModal.querySelector("#add-place-form");
 
-/* Cards */
+/* ---------------------------------- Cards --------------------------------- */
 const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
@@ -66,20 +66,32 @@ function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
+  const likeReactBtn = cardElement.querySelector(".card__react-button");
+
+  likeReactBtn.addEventListener("click", () => {
+    likeReactBtn.classList.toggle("card__react-button_active");
+  });
+
   cardTitleEl.textContent = cardData.name;
   cardImageEl.src = cardData.link;
   cardImageEl.alt = cardData.name;
   return cardElement;
 }
 
-function renderCard(cardData) {
+function renderCard(cardData, wrapper) {
   const cardElement = getCardElement(cardData);
-  cardListEl.prepend(cardElement);
+  wrapper.prepend(getCardElement(cardData));
 }
+
+function resetPlaceForm(form) {
+  form.reset();
+}
+
 /* -------------------------------------------------------------------------- */
 /*                               Event Handlers                               */
 /* -------------------------------------------------------------------------- */
 
+/* --------------------------------- Profile -------------------------------- */
 function handleProfileEditSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
@@ -87,15 +99,13 @@ function handleProfileEditSubmit(e) {
   closeModal(profileEditModal);
 }
 
+/* --------------------------------- Places --------------------------------- */
 function handleNewPlaceSubmit(e) {
   e.preventDefault();
   const name = placeTitleInput.value;
   const link = placeUrlInput.value;
-  const cardElement = getCardElement({
-    name,
-    link,
-  });
-  cardListEl.prepend(cardElement);
+  renderCard({ name, link }, cardListEl);
+  resetPlaceForm(placeAddForm);
   closeModal(placesAddModal);
 }
 
@@ -103,7 +113,7 @@ function handleNewPlaceSubmit(e) {
 /*                               Event Listeners                              */
 /* -------------------------------------------------------------------------- */
 
-/* Profile */
+/* --------------------------------- Profile -------------------------------- */
 profileEditBtn.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
@@ -114,17 +124,16 @@ profileModalCloseBtn.addEventListener("click", () => {
 });
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
-/* Places */
+/* --------------------------------- Places --------------------------------- */
 placesAddBtn.addEventListener("click", () => {
   placesAddModal.classList.add("modal_open");
 });
 placesModalCloseBtn.addEventListener("click", () => {
+  resetPlaceForm(placeAddForm);
   closeModal(placesAddModal);
 });
 
 placeAddForm.addEventListener("submit", handleNewPlaceSubmit);
 
-initialCards.forEach((cardData) => {
-  const cardElement = getCardElement(cardData);
-  cardListEl.prepend(cardElement);
-});
+/* ---------------------------------- Cards --------------------------------- */
+initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
