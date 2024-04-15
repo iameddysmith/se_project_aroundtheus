@@ -32,7 +32,9 @@ const initialCards = [
 /* --------------------------------- Profile -------------------------------- */
 const profileEditBtn = document.querySelector("#profile-edit-btn");
 const profileEditModal = document.querySelector("#profile-edit-modal");
-const profileModalCloseBtn = profileEditModal.querySelector("#modal-close-btn");
+const profileModalCloseBtn = profileEditModal.querySelector(
+  "#profile-modal-close-btn"
+);
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileTitleInput = document.querySelector("#profile-title-input");
@@ -44,7 +46,9 @@ const profileEditForm = profileEditModal.querySelector("#profile-form");
 /* --------------------------------- Places --------------------------------- */
 const placesAddBtn = document.querySelector("#places-add-btn");
 const placesAddModal = document.querySelector("#places-add-modal");
-const placesModalCloseBtn = placesAddModal.querySelector("#modal-close-btn");
+const placesModalCloseBtn = placesAddModal.querySelector(
+  "#places-modal-close-btn"
+);
 const placeTitleInput = document.querySelector("#place-title-input");
 const placeUrlInput = document.querySelector("#place-url-input");
 const placeAddForm = placesAddModal.querySelector("#add-place-form");
@@ -56,16 +60,26 @@ const cardTemplate =
 
 /* ------------------------------ Image Preview ----------------------------- */
 const placesPreviewModal = document.querySelector("#places-preview-modal");
-const placesPreviewModalCloseBtn =
-  placesPreviewModal.querySelector("#modal-close-btn");
+const placesPreviewModalCloseBtn = placesPreviewModal.querySelector(
+  "#preview-modal-close-btn"
+);
 const placesPreviewImage = document.querySelector("#places-preview");
 const placesPreviewCaption = document.querySelector("#modal-image-caption");
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
+function openModal(modal) {
+  modal.classList.add("modal_open");
+}
+
 function closeModal(modal) {
   modal.classList.remove("modal_open");
+}
+
+function fillProfileForm() {
+  profileTitleInput.value = profileTitle.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
 }
 
 function getCardElement(cardData) {
@@ -85,8 +99,10 @@ function getCardElement(cardData) {
 
   cardImageEl.addEventListener("click", () => {
     placesPreviewImage.src = cardData.link;
+    placesPreviewImage.alt = "Photo of " + cardData.name;
     placesPreviewCaption.textContent = cardData.name;
-    placesPreviewModal.classList.add("modal_open");
+    openModal(placesPreviewModal);
+    /* placesPreviewModal.classList.add("modal_open"); */
   });
 
   cardTitleEl.textContent = cardData.name;
@@ -132,18 +148,19 @@ function handleNewPlaceSubmit(e) {
 
 /* --------------------------------- Profile -------------------------------- */
 profileEditBtn.addEventListener("click", () => {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
-  profileEditModal.classList.add("modal_open");
+  fillProfileForm();
+  openModal(profileEditModal);
 });
+
 profileModalCloseBtn.addEventListener("click", () => {
   closeModal(profileEditModal);
 });
+
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
 /* --------------------------------- Places --------------------------------- */
 placesAddBtn.addEventListener("click", () => {
-  placesAddModal.classList.add("modal_open");
+  openModal(placesAddModal);
 });
 placesModalCloseBtn.addEventListener("click", () => {
   resetPlaceForm(placeAddForm);
