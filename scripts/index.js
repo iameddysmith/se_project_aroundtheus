@@ -17,11 +17,11 @@ const initialCards = [
   },
   {
     name: "Amazon River",
-    link: "https://images.unsplash.com/photo-1598837218686-a456fdaa5cf3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YW1hem9uJTIwcml2ZXJ8ZW58MHx8MHx8fDA%3D",
+    link: "https://images.unsplash.com/photo-1601687304561-387a8d2f4155?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     name: "Cairo",
-    link: "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZWd5cHR8ZW58MHx8MHx8fDA%3D",
+    link: "https://images.unsplash.com/photo-1559738933-d69ac3ff674b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
 
@@ -54,6 +54,12 @@ const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
+/* ------------------------------ Image Preview ----------------------------- */
+const placesPreviewModal = document.querySelector("#places-preview-modal");
+const placesPreviewModalCloseBtn =
+  placesPreviewModal.querySelector("#modal-close-btn");
+const placesPreviewImage = document.querySelector("#places-preview");
+const placesPreviewCaption = document.querySelector("#modal-image-caption");
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -75,6 +81,12 @@ function getCardElement(cardData) {
 
   deleteActionBtn.addEventListener("click", () => {
     cardElement.remove();
+  });
+
+  cardImageEl.addEventListener("click", () => {
+    placesPreviewImage.src = cardData.link;
+    placesPreviewCaption.textContent = cardData.name;
+    placesPreviewModal.classList.add("modal_open");
   });
 
   cardTitleEl.textContent = cardData.name;
@@ -114,11 +126,6 @@ function handleNewPlaceSubmit(e) {
   closeModal(placesAddModal);
 }
 
-function handlePlaceDelete(e) {
-  e.preventDefault();
-  /* cardElement.remove(cardData); */
-}
-
 /* -------------------------------------------------------------------------- */
 /*                               Event Listeners                              */
 /* -------------------------------------------------------------------------- */
@@ -143,6 +150,12 @@ placesModalCloseBtn.addEventListener("click", () => {
   closeModal(placesAddModal);
 });
 placeAddForm.addEventListener("submit", handleNewPlaceSubmit);
+
+/* ------------------------------ Image Preview ----------------------------- */
+
+placesPreviewModalCloseBtn.addEventListener("click", () => {
+  closeModal(placesPreviewModal);
+});
 
 /* ---------------------------------- Cards --------------------------------- */
 initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
