@@ -1,6 +1,6 @@
 .modal {
   position: fixed;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 99;
@@ -11,10 +11,15 @@
   padding: 0 19px;
   background-color: rgba(0, 0, 0, 0.5);
   font-family: Inter, Arial, Helvitica, sans-serif;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 .modal_open {
-  display: flex;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s, opacity 0.3s linear;
 }
 
 .modal__container {

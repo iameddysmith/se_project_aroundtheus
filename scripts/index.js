@@ -12,8 +12,8 @@ const initialCards = [
     link: "https://images.unsplash.com/photo-1559767180-47d8f4919e5d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2VydHxlbnwwfHwwfHx8MA%3D%3D",
   },
   {
-    name: "Bagby Hot Springs",
-    link: "https://images.unsplash.com/photo-1533657794-ad5a8ae38c55?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmFnYnl8ZW58MHx8MHx8fDA%3D",
+    name: "Weddell Sea",
+    link: "https://images.unsplash.com/photo-1585247174031-7ff21755972c?q=80&w=1942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     name: "Amazon River",
