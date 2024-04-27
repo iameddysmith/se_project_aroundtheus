@@ -59,23 +59,34 @@
           id="profile-modal-close-btn"
         ></button>
         <h2 class="modal__heading">Edit Profile</h2>
-        <form class="modal__form" id="profile-form">
+        <form class="modal__form" id="profile-form" novalidate>
           <input
             type="text"
             name="title"
             class="modal__form-input"
             placeholder="Name"
             id="profile-title-input"
+            minlength="2"
+            maxlength="40"
             required
-          />
+          /><span
+            class="modal__form-input-error"
+            id="profile-title-input-error"
+          ></span>
           <input
             type="text"
             name="description"
             class="modal__form-input"
             placeholder="Description"
             id="profile-description-input"
+            minlength="2"
+            maxlength="200"
             required
           />
+          <span
+            class="modal__form-input-error"
+            id="profile-description-input-error"
+          ></span>
           <button type="submit" class="modal__save-button">Save</button>
         </form>
       </div>
@@ -88,15 +99,21 @@
           id="places-modal-close-btn"
         ></button>
         <h2 class="modal__heading">New Place</h2>
-        <form class="modal__form" id="add-place-form">
+        <form class="modal__form" id="add-place-form" novalidate>
           <input
             type="text"
             name="title"
             class="modal__form-input"
             placeholder="Title"
             id="place-title-input"
+            minlength="1"
+            maxlength="30"
             required
           />
+          <span
+            class="modal__form-input-error"
+            id="place-title-input-error"
+          ></span>
           <input
             type="url"
             name="url"
@@ -105,7 +122,13 @@
             id="place-url-input"
             required
           />
-          <button type="submit" class="modal__save-button">Create</button>
+          <span
+            class="modal__form-input-error"
+            id="place-url-input-error"
+          ></span>
+          <button type="submit" class="modal__save-button" disabled>
+            Save
+          </button>
         </form>
       </div>
     </div>
@@ -140,5 +163,6 @@
       </li>
     </template>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validate.js" defer></script>
   </body>
 </html>

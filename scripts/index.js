@@ -71,6 +71,7 @@ const placesPreviewCaption = document.querySelector("#modal-image-caption");
 
 function openModal(modal) {
   modal.classList.add("modal_open");
+  resetPlaceForm(placeAddForm);
 }
 
 function closeModal(modal) {

@@ -90,7 +90,6 @@
 .modal__form-input {
   width: 100%;
   height: 27px;
-  margin-bottom: 30px;
   font-size: 14px;
   line-height: 1.1;
   font-weight: 400;
@@ -103,7 +102,40 @@
 }
 
 .modal__form-input:last-of-type {
-  margin-bottom: 48px;
+  margin-top: 30px;
+}
+
+.modal__form-input-error {
+  font-size: 12px;
+  color: #ff0000;
+  opacity: 0;
+  visibility: hidden;
+  min-height: 30px;
+  max-width: 358px;
+  line-height: 1.2;
+  position: absolute;
+}
+
+.modal__form-input-error-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.modal__save-button:disabled {
+  width: 100%;
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.2);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1;
+  height: 50px;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  padding: 0;
+  pointer-events: none;
+  margin-top: 31px;
 }
 
 .modal__save-button {
@@ -118,11 +150,20 @@
   border: 0;
   padding: 0;
   cursor: pointer;
+  margin-top: 31px;
 }
 
 .modal__save-button:hover {
   opacity: 0.8;
 }
+
+/* Validation */
+
+.modal__form_input_type_error {
+  border-bottom-color: red;
+}
+
+/* Media Queries */
 
 @media screen and (max-width: 720px) {
   .modal__close-button {
