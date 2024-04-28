@@ -36,17 +36,15 @@ function disableButton(submitBtn, { inactiveButtonClass }) {
 function toggleButtonState(inputEls, submitBtn, options) {
   if (hasInvalidInput(inputEls)) {
     disableButton(submitBtn, options);
-    submitBtn.disabled = true;
     return;
   }
   enableButton(submitBtn, options);
-  submitBtn.disabled = false;
 }
 
 function setEventListeners(formEl, options) {
-  const { inputSelector } = options;
+  const { inputSelector, submitButtonSelector } = options;
   const inputEls = [...formEl.querySelectorAll(inputSelector)];
-  const submitBtn = formEl.querySelector(".modal__save-button");
+  const submitBtn = formEl.querySelector(submitButtonSelector);
   inputEls.forEach((inputEl) => {
     inputEl.addEventListener("input", (e) => {
       checkInputValidity(formEl, inputEl, options);
