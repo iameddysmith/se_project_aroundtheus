@@ -28,6 +28,7 @@ const initialCards = [
 /* -------------------------------------------------------------------------- */
 /*                                  Elements                                  */
 /* -------------------------------------------------------------------------- */
+const modalOverlay = document.querySelector(".modal");
 
 /* --------------------------------- Profile -------------------------------- */
 const profileEditBtn = document.querySelector("#profile-edit-btn");
@@ -103,7 +104,6 @@ function getCardElement(cardData) {
     placesPreviewImage.alt = "Photo of " + cardData.name;
     placesPreviewCaption.textContent = cardData.name;
     openModal(placesPreviewModal);
-    /* placesPreviewModal.classList.add("modal_open"); */
   });
 
   cardTitleEl.textContent = cardData.name;
@@ -156,6 +156,10 @@ profileEditBtn.addEventListener("click", () => {
 profileModalCloseBtn.addEventListener("click", () => {
   closeModal(profileEditModal);
 });
+
+// modalOverlay.addEventListener("click", () => {
+//   closeModal(profileEditModal);
+// });
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 

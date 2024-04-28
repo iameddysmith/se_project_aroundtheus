@@ -23,16 +23,25 @@ function hasInvalidInput(inputList) {
   return !inputList.every((inputEl) => inputEl.validity.valid);
 }
 
-//enableButton
-//disableButton
+function enableButton(submitBtn, { inactiveButtonClass }) {
+  submitBtn.classList.remove(inactiveButtonClass);
+  submitBtn.disabled = false;
+}
 
-function toggleButtonState(inputEls, submitBtn, { inactiveButtonClass }) {
+function disableButton(submitBtn, { inactiveButtonClass }) {
+  submitBtn.classList.add(inactiveButtonClass);
+  submitBtn.disabled = true;
+}
+
+function toggleButtonState(inputEls, submitBtn, options) {
   if (hasInvalidInput(inputEls)) {
-    submitBtn.classList.add(inactiveButtonClass);
+    disableButton(submitBtn, options);
+    submitBtn.classList.add(options);
     submitBtn.disabled = true;
     return;
   }
-  submitBtn.classList.remove(inactiveButtonClass);
+  enableButton(submitBtn, options);
+  submitBtn.classList.remove(options);
   submitBtn.disabled = false;
 }
 
