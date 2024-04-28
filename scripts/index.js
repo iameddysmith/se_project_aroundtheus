@@ -28,7 +28,6 @@ const initialCards = [
 /* -------------------------------------------------------------------------- */
 /*                                  Elements                                  */
 /* -------------------------------------------------------------------------- */
-const modalOverlay = document.querySelector(".modal");
 
 /* --------------------------------- Profile -------------------------------- */
 const profileEditBtn = document.querySelector("#profile-edit-btn");
@@ -66,6 +65,7 @@ const placesPreviewModalCloseBtn = placesPreviewModal.querySelector(
 );
 const placesPreviewImage = document.querySelector("#places-preview");
 const placesPreviewCaption = document.querySelector("#modal-image-caption");
+
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -73,10 +73,27 @@ const placesPreviewCaption = document.querySelector("#modal-image-caption");
 function openModal(modal) {
   modal.classList.add("modal_open");
   resetPlaceForm(placeAddForm);
+  document.addEventListener("keydown", closeModalEsc);
+  modal.addEventListener("mousedown", closeModalOverlay);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_open");
+  document.removeEventListener("keydown", closeModalEsc);
+  modal.removeEventListener("mousedown", closeModalOverlay);
+}
+
+function closeModalEsc(e) {
+  if (e.key === "Escape") {
+    const modalOpened = document.querySelector(".modal_open");
+    closeModal(modalOpened);
+  }
+}
+
+function closeModalOverlay(e) {
+  if (e.target === e.currentTarget) {
+    closeModal(e.currentTarget);
+  }
 }
 
 function fillProfileForm() {
@@ -157,10 +174,6 @@ profileModalCloseBtn.addEventListener("click", () => {
   closeModal(profileEditModal);
 });
 
-// modalOverlay.addEventListener("click", () => {
-//   closeModal(profileEditModal);
-// });
-
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
 /* --------------------------------- Places --------------------------------- */
@@ -181,3 +194,5 @@ placesPreviewModalCloseBtn.addEventListener("click", () => {
 
 /* ---------------------------------- Cards --------------------------------- */
 initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
+
+/* ---------------------------------TEST------------------------------------- */
