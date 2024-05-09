@@ -172,7 +172,7 @@ function handleNewPlaceSubmit(e) {
   renderCard({ name, link }, cardListEl);
   resetForm(placeAddForm);
   addPlaceValidation.resetValidation();
-  addPlaceValidation._disableButton();
+  addPlaceValidation.disableButton();
   closeModal(placesAddModal);
 }
 
