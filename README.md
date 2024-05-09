@@ -1,14 +1,17 @@
-# Project 3: Around The U.S.
+# Project 3-7: Around The U.S.
 
 ### Overview
 
 - Intro
 - Figma
 - Images
+- OOP
+- Polymorphism
+- Code Refactor
 
 **Intro**
 
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.
+This project is made so all the elements are displayed correctly on popular screen sizes. As we elevate through our different sprints, our goal become clear to be more concise & optimal with our coding.
 
 **Figma**
 
@@ -22,7 +25,7 @@ Good luck and have fun!
 
 **Description**
 
-This is a project entitled 'Around the U.S.' My third project in the TripleTen Software Engineer course. With this project there was a lot of new concepts to learn.
+This is a project entitled 'Around the U.S.' While this was introduced in our 3rd project, we have continued to not only learn some early concepts of Javascript, but as we progress, we begin to consolidate our code. Optimization is becoming clear. While these projects bring more challenging concepts, we are also delving deeper into a better understanding and will soon be able to rework and optimize code we have not written in the field and be able to correctly label and map out what is going on and why.
 
 - Responsive Design (Adapting to different devices)
 - Loading fonts in the project rather than just linking
