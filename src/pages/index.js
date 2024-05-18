@@ -1,36 +1,12 @@
-import Card from "../../components/Card.js";
-import FormValidator from "../../components/FormValidator.js";
 import "./index.css";
-
-const initialCards = [
-  {
-    name: "Mar Caribe",
-    link: "https://images.unsplash.com/photo-1538964173425-93884d739596?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8OXx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    name: "Mount Shasta",
-    link: "https://images.unsplash.com/photo-1581881067989-7e3eaf45f4f6?q=80&w=2030&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    name: "Death Valley",
-    link: "https://images.unsplash.com/photo-1559767180-47d8f4919e5d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGRlc2VydHxlbnwwfHwwfHx8MA%3D%3D",
-  },
-  {
-    name: "Weddell Sea",
-    link: "https://images.unsplash.com/photo-1585247174031-7ff21755972c?q=80&w=1942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    name: "Amazon River",
-    link: "https://images.unsplash.com/photo-1601687304561-387a8d2f4155?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    name: "Cairo",
-    link: "https://images.unsplash.com/photo-1559738933-d69ac3ff674b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage";
+import { initialCards, settings } from "../utils/constants.js";
 
 /* Universal Var */
-const closeButtons = document.querySelectorAll(".modal__close-button");
+// const closeButtons = document.querySelectorAll(".modal__close-button");
 
 /* Profile Var */
 const profileEditBtn = document.querySelector("#profile-edit-btn");
@@ -56,18 +32,18 @@ const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
 /* Image Preview Var*/
-const placesPreviewModal = document.querySelector("#places-preview-modal");
-const placesPreviewImage = placesPreviewModal.querySelector("#places-preview");
-const placesPreviewCaption = placesPreviewModal.querySelector(
-  "#modal-image-caption"
-);
+// const placesPreviewModal = document.querySelector("#places-preview-modal");
+// const placesPreviewImage = placesPreviewModal.querySelector("#places-preview");
+// const placesPreviewCaption = placesPreviewModal.querySelector(
+//   "#modal-image-caption"
+// );
 
 /* Universal Open Modal Function */
-function openModal(modal) {
-  modal.classList.add("modal_open");
-  document.addEventListener("keydown", closeModalEsc);
-  modal.addEventListener("mousedown", closeModalOverlay);
-}
+// function openModal(modal) {
+//   modal.classList.add("modal_open");
+//   document.addEventListener("keydown", closeModalEsc);
+//   modal.addEventListener("mousedown", closeModalOverlay);
+// }
 
 /* Auto Populate Profile Name-Description Upon Open */
 function fillProfileForm() {
@@ -76,23 +52,23 @@ function fillProfileForm() {
 }
 
 /* Universal Modal Close Buttons - Close Functions */
-closeButtons.forEach((btn) => {
-  const modal = btn.closest(".modal");
-  btn.addEventListener("click", () => closeModal(modal));
-});
+// closeButtons.forEach((btn) => {
+//   const modal = btn.closest(".modal");
+//   btn.addEventListener("click", () => closeModal(modal));
+// });
 
-function closeModal(modal) {
-  modal.classList.remove("modal_open");
-  document.removeEventListener("keydown", closeModalEsc);
-  modal.removeEventListener("mousedown", closeModalOverlay);
-}
+// function closeModal(modal) {
+//   modal.classList.remove("modal_open");
+//   document.removeEventListener("keydown", closeModalEsc);
+//   modal.removeEventListener("mousedown", closeModalOverlay);
+// }
 
-function closeModalEsc(e) {
-  if (e.key === "Escape") {
-    const modalOpened = document.querySelector(".modal_open");
-    closeModal(modalOpened);
-  }
-}
+// function closeModalEsc(e) {
+//   if (e.key === "Escape") {
+//     const modalOpened = document.querySelector(".modal_open");
+//     closeModal(modalOpened);
+//   }
+// }
 
 function closeModalOverlay(e) {
   if (e.target === e.currentTarget) {
@@ -123,33 +99,15 @@ placesAddBtn.addEventListener("click", () => {
 placeAddForm.addEventListener("submit", handleNewPlaceSubmit);
 
 /* Image Preview Function */
-function handleImageClick(cardData) {
-  placesPreviewImage.src = cardData.link;
-  placesPreviewImage.alt = "Photo of " + cardData.name;
-  placesPreviewCaption.textContent = cardData.name;
-  openModal(placesPreviewModal);
+function handleImageClick(data) {
+  imagePreviewModal.open(data);
 }
-
-/* Intialize Cards */
-initialCards.forEach((cardData) => {
-  cardListEl.prepend(getCardElement(cardData));
-});
 
 function getCardElement(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
   const cardElement = card.getView();
   return cardElement;
 }
-
-/* Form Validation Settings & Var */
-const settings = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__form-input",
-  submitButtonSelector: ".modal__save-button",
-  inactiveButtonClass: "modal__save-button-disabled",
-  inputErrorClass: "modal__form_input_type_error",
-  errorClass: "modal__form-input-error-visible",
-};
 
 const profileEditValidation = new FormValidator(settings, profileEditForm);
 const addPlaceValidation = new FormValidator(settings, placeAddForm);
@@ -170,12 +128,18 @@ function handleNewPlaceSubmit(e) {
   e.preventDefault();
   const name = placeTitleInput.value;
   const link = placeUrlInput.value;
-  renderCard({ name, link }, cardListEl);
+  const cardElement = getCardElement({ name, link });
+  section.addItem(cardElement);
   resetForm(placeAddForm);
-  addPlaceValidation.resetValidation();
-  addPlaceValidation.disableButton();
   closeModal(placesAddModal);
 }
+const section = new Section(
+  { items: initialCards, renderer: getCardElement },
+  ".cards__list"
+);
 
+const imagePreviewModal = new PopupWithImage("#places-preview-modal");
+
+section.renderItems();
 profileEditValidation.enableValidation();
 addPlaceValidation.enableValidation();
