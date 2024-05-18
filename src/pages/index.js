@@ -3,6 +3,8 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 import { initialCards, settings } from "../utils/constants.js";
 
 /* Universal Var */
@@ -10,7 +12,7 @@ import { initialCards, settings } from "../utils/constants.js";
 
 /* Profile Var */
 const profileEditBtn = document.querySelector("#profile-edit-btn");
-const profileEditModal = document.querySelector("#profile-edit-modal");
+// const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileTitleInput = document.querySelector("#profile-title-input");
@@ -31,49 +33,10 @@ const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
-/* Image Preview Var*/
-// const placesPreviewModal = document.querySelector("#places-preview-modal");
-// const placesPreviewImage = placesPreviewModal.querySelector("#places-preview");
-// const placesPreviewCaption = placesPreviewModal.querySelector(
-//   "#modal-image-caption"
-// );
-
-/* Universal Open Modal Function */
-// function openModal(modal) {
-//   modal.classList.add("modal_open");
-//   document.addEventListener("keydown", closeModalEsc);
-//   modal.addEventListener("mousedown", closeModalOverlay);
-// }
-
 /* Auto Populate Profile Name-Description Upon Open */
 function fillProfileForm() {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-}
-
-/* Universal Modal Close Buttons - Close Functions */
-// closeButtons.forEach((btn) => {
-//   const modal = btn.closest(".modal");
-//   btn.addEventListener("click", () => closeModal(modal));
-// });
-
-// function closeModal(modal) {
-//   modal.classList.remove("modal_open");
-//   document.removeEventListener("keydown", closeModalEsc);
-//   modal.removeEventListener("mousedown", closeModalOverlay);
-// }
-
-// function closeModalEsc(e) {
-//   if (e.key === "Escape") {
-//     const modalOpened = document.querySelector(".modal_open");
-//     closeModal(modalOpened);
-//   }
-// }
-
-function closeModalOverlay(e) {
-  if (e.target === e.currentTarget) {
-    closeModal(e.currentTarget);
-  }
 }
 
 /* Universal Reset Form Function */
@@ -86,21 +49,22 @@ function handleProfileEditSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  closeModal(profileEditModal);
+  editProfileModal.close();
 }
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
 /* Add Place Submit Button Listener */
 placesAddBtn.addEventListener("click", () => {
-  openModal(placesAddModal);
+  addPlaceModal.open();
+  addPlaceModal.setEventListeners();
 });
 
 placeAddForm.addEventListener("submit", handleNewPlaceSubmit);
 
 /* Image Preview Function */
-function handleImageClick(data) {
-  imagePreviewModal.open(data);
+function handleImageClick(imageData) {
+  imagePreviewModal.open(imageData);
   imagePreviewModal.setEventListeners();
 }
 
@@ -117,7 +81,8 @@ const addPlaceValidation = new FormValidator(settings, placeAddForm);
 profileEditBtn.addEventListener("click", () => {
   profileEditValidation.resetValidation();
   fillProfileForm();
-  openModal(profileEditModal);
+  editProfileModal.open();
+  editProfileModal.setEventListeners();
 });
 
 function renderCard(cardData, wrapper) {
@@ -132,7 +97,7 @@ function handleNewPlaceSubmit(e) {
   const cardElement = getCardElement({ name, link });
   section.addItem(cardElement);
   resetForm(placeAddForm);
-  closeModal(placesAddModal);
+  addPlaceModal.close();
 }
 const section = new Section(
   { items: initialCards, renderer: getCardElement },
@@ -141,6 +106,21 @@ const section = new Section(
 
 const imagePreviewModal = new PopupWithImage("#places-preview-modal");
 
+const userData = new UserInfo({
+  name: "title",
+  job: "description",
+});
+
 section.renderItems();
 profileEditValidation.enableValidation();
 addPlaceValidation.enableValidation();
+
+const editProfileModal = new PopupWithForm(
+  "#profile-edit-modal",
+  handleProfileEditSubmit
+);
+
+const addPlaceModal = new PopupWithForm(
+  "#places-add-modal",
+  handleProfileEditSubmit
+);

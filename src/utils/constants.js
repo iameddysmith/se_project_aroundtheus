@@ -25,44 +25,6 @@ export const initialCards = [
   },
 ];
 
-/* Universal Var */
-export const closeButtons = document.querySelectorAll(".modal__close-button");
-
-/* Profile Var */
-export const profileEditBtn = document.querySelector("#profile-edit-btn");
-export const profileEditModal = document.querySelector("#profile-edit-modal");
-export const profileTitle = document.querySelector(".profile__title");
-export const profileDescription = document.querySelector(
-  ".profile__description"
-);
-export const profileTitleInput = document.querySelector("#profile-title-input");
-export const profileEditForm = document.forms["profile-form"];
-export const profileDescriptionInput = document.querySelector(
-  "#profile-description-input"
-);
-
-/* Places Var */
-export const placesAddBtn = document.querySelector("#places-add-btn");
-export const placesAddModal = document.querySelector("#places-add-modal");
-export const placeTitleInput = document.querySelector("#place-title-input");
-export const placeUrlInput = document.querySelector("#place-url-input");
-export const placeAddForm = document.forms["add-place-form"];
-
-/* Card Var */
-export const cardListEl = document.querySelector(".cards__list");
-export const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
-
-/* Image Preview Var*/
-export const placesPreviewModal = document.querySelector(
-  "#places-preview-modal"
-);
-export const placesPreviewImage =
-  placesPreviewModal.querySelector("#places-preview");
-export const placesPreviewCaption = placesPreviewModal.querySelector(
-  "#modal-image-caption"
-);
-
 /* Form Validation Settings & Var */
 export const settings = {
   formSelector: ".modal__form",
