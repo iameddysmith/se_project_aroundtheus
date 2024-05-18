@@ -101,6 +101,7 @@ placeAddForm.addEventListener("submit", handleNewPlaceSubmit);
 /* Image Preview Function */
 function handleImageClick(data) {
   imagePreviewModal.open(data);
+  imagePreviewModal.setEventListeners();
 }
 
 function getCardElement(cardData) {
