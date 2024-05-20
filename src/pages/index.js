@@ -26,7 +26,6 @@ profileEditBtn.addEventListener("click", () => {
   profileTitleInput.value = name;
   profileDescriptionInput.value = job;
   editProfileModal.open();
-  editProfileModal.setEventListeners();
 });
 /* Profile Edit Function */
 function handleProfileEditSubmit(formData) {
@@ -37,22 +36,21 @@ function handleProfileEditSubmit(formData) {
 /* Add Place Button Listener */
 placesAddBtn.addEventListener("click", () => {
   addPlaceModal.open();
-  addPlaceModal.setEventListeners();
 });
 
 /* Add Place Function */
-function handleNewPlaceSubmit(data) {
-  //console.log(data);
-  const { title, url } = data;
+function handleNewPlaceSubmit(cardData) {
+  const { title, url } = cardData;
   const cardElement = getCardElement({ name: title, link: url });
   section.addItem(cardElement);
   addPlaceModal.close();
+  addPlaceModal.reset();
+  addPlaceValidation.disableButton();
 }
 
 /* Image Click Preview Function */
 function handleImageClick(imageData) {
   imagePreviewModal.open(imageData);
-  imagePreviewModal.setEventListeners();
 }
 
 function getCardElement(cardData) {
@@ -63,21 +61,29 @@ function getCardElement(cardData) {
 
 const profileEditValidation = new FormValidator(settings, profileEditForm);
 const addPlaceValidation = new FormValidator(settings, placeAddForm);
+
 const section = new Section(
   { items: initialCards, renderer: getCardElement },
   ".cards__list"
 );
+
 const imagePreviewModal = new PopupWithImage("#places-preview-modal");
+
 const userInfo = new UserInfo();
+
 const editProfileModal = new PopupWithForm(
   "#profile-edit-modal",
   handleProfileEditSubmit
 );
+
 const addPlaceModal = new PopupWithForm(
   "#places-add-modal",
   handleNewPlaceSubmit
 );
 
+editProfileModal.setEventListeners();
+imagePreviewModal.setEventListeners();
+addPlaceModal.setEventListeners();
 section.renderItems();
 profileEditValidation.enableValidation();
 addPlaceValidation.enableValidation();
