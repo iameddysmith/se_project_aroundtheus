@@ -2,7 +2,7 @@ import "./index.css";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
-import PopupWithImage from "../components/PopupWithImage";
+import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards, settings } from "../utils/constants.js";
@@ -22,11 +22,12 @@ const placeAddForm = document.forms["add-place-form"];
 /* Edit Profile Button Listener */
 profileEditBtn.addEventListener("click", () => {
   const { name, job } = userInfo.getUserInfo();
-  profileEditValidation.resetValidation();
   profileTitleInput.value = name;
   profileDescriptionInput.value = job;
   editProfileModal.open();
+  profileEditValidation.resetValidation();
 });
+
 /* Profile Edit Function */
 function handleProfileEditSubmit(formData) {
   userInfo.setUserInfo(formData);
