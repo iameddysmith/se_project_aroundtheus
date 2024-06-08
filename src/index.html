@@ -20,14 +20,14 @@
           <img src="<%=require("./images/avatar_j_cousteau.png")%>" alt="Jacques
           Cousteau Avatar Image" class="profile__image" />
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title"></h1>
             <button
               class="profile__edit-button"
               id="profile-edit-btn"
               type="button"
               aria-label="Edit Profile"
             ></button>
-            <p class="profile__description">Explorer</p>
+            <p class="profile__description"></p>
           </div>
           <button
             class="profile__add-button"
@@ -85,6 +85,24 @@
         </form>
       </div>
     </div>
+    <!-- Confrm Delete Place Modal -->
+    <div class="modal" id="places-delete-modal">
+      <div class="modal__container modal__container-confirm">
+        <button
+          class="modal__close-button"
+          id="delete-place-close-btn"
+        ></button>
+        <h2 class="modal__heading modal__heading-confirm">Are you sure?</h2>
+        <form class="modal__form">
+          <button
+            type="submit"
+            class="modal__save-button modal__save-button-confirm"
+          >
+            Yes
+          </button>
+        </form>
+      </div>
+    </div>
     <!-- Add Place Modal -->
     <div class="modal" id="places-add-modal">
       <div class="modal__container">
@@ -137,6 +155,7 @@
         <h2 class="modal__image-caption" id="modal-image-caption"></h2>
       </div>
     </div>
+
     <!-- JS Card Template -->
     <template id="card-template">
       <li class="card">

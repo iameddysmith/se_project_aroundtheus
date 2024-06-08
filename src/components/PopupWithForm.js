@@ -17,15 +17,38 @@ export default class PopupWithForm extends Popup {
   }
 
   reset() {
-    this._popupForm.reset();
+    if (this._popupForm) {
+      this._popupForm.reset();
+    }
   }
 
   setEventListeners() {
-    this._popupForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
-    });
-
     super.setEventListeners();
+    if (this._popupForm) {
+      this._popupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this._handleFormSubmit(this._getInputValues());
+      });
+    }
+  }
+
+  open() {
+    super.open();
+  }
+
+  setSubmitHandler(newSubmitHandler) {
+    this._handleFormSubmit = newSubmitHandler;
+  }
+
+  setLoading(isLoading) {
+    if (this._submitBtn) {
+      if (isLoading) {
+        this._submitBtn.textContent = "Saving...";
+        this._submitBtn.setAttribute("disabled", true);
+      } else {
+        this._submitBtn.textContent = "Save";
+        this._submitBtn.removeAttribute("disabled");
+      }
+    }
   }
 }
