@@ -5,9 +5,22 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import { settings } from "../utils/constants.js";
+import { settings, elements } from "../utils/constants.js";
 import Api from "../components/Api.js";
 
+/* Utils Elements */
+const {
+  profileEditBtn,
+  profileTitleInput,
+  profileEditForm,
+  profileDescriptionInput,
+  placesAddBtn,
+  placeAddForm,
+  avatarUpdateBtn,
+  avatarForm,
+} = elements;
+
+/* API Var */
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
@@ -16,51 +29,48 @@ const api = new Api({
   },
 });
 
-/* Profile Var */
-const profileEditBtn = document.querySelector("#profile-edit-btn");
-const profileTitleInput = document.querySelector("#profile-title-input");
-const profileEditForm = document.forms["profile-form"];
-const profileDescriptionInput = document.querySelector(
-  "#profile-description-input"
-);
-
-/* Places Var */
-const placesAddBtn = document.querySelector("#places-add-btn");
-const placeAddForm = document.forms["add-place-form"];
-
 /* Image Click Preview Function */
 function handleImageClick(imageData) {
   imagePreviewModal.open(imageData);
 }
 
+/* Validation */
 const profileEditValidation = new FormValidator(settings, profileEditForm);
 const addPlaceValidation = new FormValidator(settings, placeAddForm);
+const avatarValidation = new FormValidator(settings, avatarForm);
 
-const imagePreviewModal = new PopupWithImage("#places-preview-modal");
-
+/* Modals */
 const editProfileModal = new PopupWithForm(
   "#profile-edit-modal",
   handleProfileEditSubmit
 );
-
 const addPlaceModal = new PopupWithForm(
   "#places-add-modal",
   handleNewPlaceSubmit
 );
-
+const updateAvatarModal = new PopupWithForm(
+  "#avatar-update-modal",
+  handleAvatarSubmit
+);
+const imagePreviewModal = new PopupWithImage("#places-preview-modal");
 const deletePlaceModal = new PopupWithForm("#places-delete-modal", () => {});
 
+/* Event Listeners */
 editProfileModal.setEventListeners();
 imagePreviewModal.setEventListeners();
+updateAvatarModal.setEventListeners();
 addPlaceModal.setEventListeners();
-deletePlaceModal.setEventListeners();
 
+/* Form Validation */
+deletePlaceModal.setEventListeners();
+avatarValidation.enableValidation();
 profileEditValidation.enableValidation();
 addPlaceValidation.enableValidation();
 
 /* DELETE Place Function */
 function handleDeleteClick(cardID, cardElement) {
   deletePlaceModal.setSubmitHandler(() => {
+    deletePlaceModal.setLoading(true, "Removing...", "Yes");
     api
       .removePlace(cardID)
       .then(() => {
@@ -69,17 +79,22 @@ function handleDeleteClick(cardID, cardElement) {
       })
       .catch((err) => {
         console.error("Error deleting place:", err);
+      })
+      .finally(() => {
+        deletePlaceModal.setLoading(false, "Removing...", "Yes");
       });
   });
   deletePlaceModal.open();
 }
 
+/* Create Cards */
 function getCardElement(cardData) {
   const card = new Card(
     cardData,
     "#card-template",
     handleImageClick,
-    handleDeleteClick
+    handleDeleteClick,
+    handleLikeReact
   );
   return card.getView();
 }
@@ -114,6 +129,8 @@ api
 
 /* PATCH Profile Edit Function */
 function handleProfileEditSubmit(profileInputValues) {
+  editProfileModal.setLoading(true);
+
   const userData = {
     name: profileInputValues.title,
     about: profileInputValues.description,
@@ -127,11 +144,35 @@ function handleProfileEditSubmit(profileInputValues) {
     })
     .catch((err) => {
       console.error("Error updating user info:", err);
+    })
+    .finally(() => {
+      editProfileModal.setLoading(false);
+    });
+}
+
+/* PATCH Profile Avatar Function */
+function handleAvatarSubmit({ url }) {
+  updateAvatarModal.setLoading(true);
+
+  api
+    .updateAvatar(url)
+    .then((res) => {
+      userInfo.updateAvatar(url);
+      updateAvatarModal.reset();
+      updateAvatarModal.close();
+      console.log("Success:", res);
+    })
+    .catch((err) => {
+      console.error("Error updating profile avatar:", err);
+    })
+    .finally(() => {
+      updateAvatarModal.setLoading(true, "Save");
     });
 }
 
 /* POST Add Place Function */
 function handleNewPlaceSubmit(placeCardData) {
+  addPlaceModal.setLoading(true);
   const cardData = {
     name: placeCardData.title,
     link: placeCardData.url,
@@ -148,11 +189,33 @@ function handleNewPlaceSubmit(placeCardData) {
       section.addItem(cardElement);
       addPlaceModal.close();
       addPlaceModal.reset();
-      addPlaceValidation.disableButton();
     })
     .catch((err) => {
       console.error("Error adding new place:", err);
+    })
+    .finally(() => {
+      addPlaceModal.setLoading(false);
+      addPlaceValidation.disableButton();
     });
+}
+
+/* PUT Add Like React */
+function handleLikeReact(likeReact, likeStatus, cardId) {
+  if (likeStatus) {
+    api
+      .removeLikeReact(cardId)
+      .then(() => {
+        likeReact.classList.remove("card__react-button_active");
+      })
+      .catch((error) => console.error("Error removing like reaction:", error));
+  } else {
+    api
+      .addLikeReact(cardId)
+      .then(() => {
+        likeReact.classList.add("card__react-button_active");
+      })
+      .catch((error) => console.error("Error adding like reaction:", error));
+  }
 }
 
 /* Edit Profile Button Listener */
@@ -167,4 +230,9 @@ profileEditBtn.addEventListener("click", () => {
 /* Add Place Button Listener */
 placesAddBtn.addEventListener("click", () => {
   addPlaceModal.open();
+});
+
+/* Profile Avatar Button Listener */
+avatarUpdateBtn.addEventListener("click", () => {
+  updateAvatarModal.open();
 });

@@ -1,5 +1,3 @@
-//my token: 86ad626a-488e-4505-926f-04913062aa19
-
 export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -58,6 +56,43 @@ export default class Api {
 
   removePlace(cardID) {
     return fetch(`${this._baseUrl}/cards/${cardID}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  updateAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ avatar }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  addLikeReact(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  removeLikeReact(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {

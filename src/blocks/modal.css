@@ -41,6 +41,11 @@
   box-sizing: border-box;
 }
 
+.modal__container-avatar {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .modal__container-imagepreview {
   position: relative;
   display: flex;
@@ -72,6 +77,10 @@
 
 .modal__heading-confirm {
   margin: 0 0;
+}
+
+.modal__heading-avatar {
+  margin: 0 0 24px 0;
 }
 
 .modal__close-button {
@@ -114,6 +123,9 @@
   margin-top: 30px;
 }
 
+.modal__form-avatar {
+  margin-top: 0;
+}
 .modal__save-button {
   width: 100%;
   color: #fff;
