@@ -72,19 +72,24 @@ function handleSubmit(
   request,
   popupInstance,
   loadingText = "Saving...",
-  defaultText = "Save"
+  defaultText = "Save",
+  successCallback
 ) {
   popupInstance.setLoading(true, loadingText);
 
   return request()
     .then(() => {
       popupInstance.close();
+      popupInstance.reset();
     })
     .catch((error) => {
       console.error("Error:", error);
     })
     .finally(() => {
       popupInstance.setLoading(false, defaultText);
+      if (successCallback) {
+        successCallback();
+      }
     });
 }
 
@@ -169,8 +174,7 @@ function handleAvatarSubmit({ url }) {
     });
   }
 
-  handleSubmit(makeRequest, updateAvatarModal, "Saving...").then(() => {
-    updateAvatarModal.reset();
+  handleSubmit(makeRequest, updateAvatarModal, "Saving...", "Save", () => {
     updateAvatarModal.setLoading(true, "Save");
   });
 }
@@ -194,8 +198,7 @@ function handleNewPlaceSubmit(placeCardData) {
       });
   }
 
-  handleSubmit(makeRequest, addPlaceModal, "Saving...").then(() => {
-    addPlaceModal.reset();
+  handleSubmit(makeRequest, addPlaceModal, "Saving...", "Save", () => {
     addPlaceModal.setLoading(true, "Save");
   });
 }
@@ -203,19 +206,9 @@ function handleNewPlaceSubmit(placeCardData) {
 /* PUT Add Like React */
 function handleLikeReact(cardId, likeStatus) {
   if (likeStatus) {
-    return api
-      .removeLikeReact(cardId)
-      .then(() => {})
-      .catch((error) => {
-        console.error("Error removing like reaction:", error);
-      });
+    return api.removeLikeReact(cardId);
   } else {
-    return api
-      .addLikeReact(cardId)
-      .then(() => {})
-      .catch((error) => {
-        console.error("Error adding like reaction:", error);
-      });
+    return api.addLikeReact(cardId);
   }
 }
 
