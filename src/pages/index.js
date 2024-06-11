@@ -67,23 +67,39 @@ avatarValidation.enableValidation();
 profileEditValidation.enableValidation();
 addPlaceValidation.enableValidation();
 
+/* Universal Submit Handler */
+function handleSubmit(
+  request,
+  popupInstance,
+  loadingText = "Saving...",
+  defaultText = "Save"
+) {
+  popupInstance.setLoading(true, loadingText);
+
+  return request()
+    .then(() => {
+      popupInstance.close();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    })
+    .finally(() => {
+      popupInstance.setLoading(false, defaultText);
+    });
+}
+
 /* DELETE Place Function */
 function handleDeleteClick(cardID, cardElement) {
   deletePlaceModal.setSubmitHandler(() => {
-    deletePlaceModal.setLoading(true, "Removing...", "Yes");
-    api
-      .removePlace(cardID)
-      .then(() => {
+    function makeRequest() {
+      return api.removePlace(cardID).then(() => {
         cardElement.remove();
-        deletePlaceModal.close();
-      })
-      .catch((err) => {
-        console.error("Error deleting place:", err);
-      })
-      .finally(() => {
-        deletePlaceModal.setLoading(false, "Removing...", "Yes");
       });
+    }
+
+    handleSubmit(makeRequest, deletePlaceModal, "Removing...", "Yes");
   });
+
   deletePlaceModal.open();
 }
 
@@ -119,7 +135,12 @@ api
   .catch((err) => console.error(err));
 
 /* GET Profile */
-const userInfo = new UserInfo();
+const userInfo = new UserInfo(
+  ".profile__title",
+  ".profile__description",
+  ".profile__image"
+);
+
 api
   .getUserInfo()
   .then((profileData) => {
@@ -129,92 +150,72 @@ api
 
 /* PATCH Profile Edit Function */
 function handleProfileEditSubmit(profileInputValues) {
-  editProfileModal.setLoading(true);
+  function makeRequest() {
+    return api
+      .editUserInfo(profileInputValues.title, profileInputValues.description)
+      .then((updatedUserData) => {
+        userInfo.setUserInfo(updatedUserData);
+      });
+  }
 
-  const userData = {
-    name: profileInputValues.title,
-    about: profileInputValues.description,
-  };
-
-  api
-    .editUserInfo(userData.name, userData.about)
-    .then((updatedUserData) => {
-      userInfo.setUserInfo(updatedUserData);
-      editProfileModal.close();
-    })
-    .catch((err) => {
-      console.error("Error updating user info:", err);
-    })
-    .finally(() => {
-      editProfileModal.setLoading(false);
-    });
+  handleSubmit(makeRequest, editProfileModal);
 }
 
 /* PATCH Profile Avatar Function */
 function handleAvatarSubmit({ url }) {
-  updateAvatarModal.setLoading(true);
-
-  api
-    .updateAvatar(url)
-    .then((res) => {
+  function makeRequest() {
+    return api.updateAvatar(url).then(() => {
       userInfo.updateAvatar(url);
-      updateAvatarModal.reset();
-      updateAvatarModal.close();
-      console.log("Success:", res);
-    })
-    .catch((err) => {
-      console.error("Error updating profile avatar:", err);
-    })
-    .finally(() => {
-      updateAvatarModal.setLoading(true, "Save");
     });
+  }
+
+  handleSubmit(makeRequest, updateAvatarModal, "Saving...").then(() => {
+    updateAvatarModal.reset();
+    updateAvatarModal.setLoading(true, "Save");
+  });
 }
 
 /* POST Add Place Function */
 function handleNewPlaceSubmit(placeCardData) {
-  addPlaceModal.setLoading(true);
-  const cardData = {
-    name: placeCardData.title,
-    link: placeCardData.url,
-  };
-
-  api
-    .addNewPlace(cardData.name, cardData.link)
-    .then((newPlaceCard) => {
-      const cardElement = getCardElement({
-        name: newPlaceCard.name,
-        link: newPlaceCard.link,
-        _id: newPlaceCard._id,
+  function makeRequest() {
+    const cardData = {
+      name: placeCardData.title,
+      link: placeCardData.url,
+    };
+    return api
+      .addNewPlace(cardData.name, cardData.link)
+      .then((newPlaceCard) => {
+        const cardElement = getCardElement({
+          name: newPlaceCard.name,
+          link: newPlaceCard.link,
+          _id: newPlaceCard._id,
+        });
+        section.addItem(cardElement);
       });
-      section.addItem(cardElement);
-      addPlaceModal.close();
-      addPlaceModal.reset();
-    })
-    .catch((err) => {
-      console.error("Error adding new place:", err);
-    })
-    .finally(() => {
-      addPlaceModal.setLoading(false);
-      addPlaceValidation.disableButton();
-    });
+  }
+
+  handleSubmit(makeRequest, addPlaceModal, "Saving...").then(() => {
+    addPlaceModal.reset();
+    addPlaceModal.setLoading(true, "Save");
+  });
 }
 
 /* PUT Add Like React */
-function handleLikeReact(likeReact, likeStatus, cardId) {
+function handleLikeReact(cardId, likeStatus) {
   if (likeStatus) {
-    api
+    return api
       .removeLikeReact(cardId)
-      .then(() => {
-        likeReact.classList.remove("card__react-button_active");
-      })
-      .catch((error) => console.error("Error removing like reaction:", error));
+      .then(() => {})
+      .catch((error) => {
+        console.error("Error removing like reaction:", error);
+      });
   } else {
-    api
+    return api
       .addLikeReact(cardId)
-      .then(() => {
-        likeReact.classList.add("card__react-button_active");
-      })
-      .catch((error) => console.error("Error adding like reaction:", error));
+      .then(() => {})
+      .catch((error) => {
+        console.error("Error adding like reaction:", error);
+      });
   }
 }
 
