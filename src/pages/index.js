@@ -89,6 +89,7 @@ function handleSubmit(
     })
     .catch((error) => {
       console.error("Error:", error);
+      disableBtn = false;
     })
     .finally(() => {
       popupInstance.setLoading(disableBtn, defaultText);
