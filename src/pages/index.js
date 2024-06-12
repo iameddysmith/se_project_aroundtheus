@@ -73,7 +73,7 @@ function handleSubmit(
   popupInstance,
   loadingText = "Saving...",
   defaultText = "Save",
-  successCallback
+  disableBtn = false
 ) {
   popupInstance.setLoading(true, loadingText);
 
@@ -81,15 +81,17 @@ function handleSubmit(
     .then(() => {
       popupInstance.close();
       popupInstance.reset();
+      if (disableBtn) {
+        popupInstance.setLoading(true);
+      } else {
+        popupInstance.setLoading(false);
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
     })
     .finally(() => {
-      popupInstance.setLoading(false, defaultText);
-      if (successCallback) {
-        successCallback();
-      }
+      popupInstance.setLoading(disableBtn, defaultText);
     });
 }
 
@@ -102,7 +104,7 @@ function handleDeleteClick(cardID, cardElement) {
       });
     }
 
-    handleSubmit(makeRequest, deletePlaceModal, "Removing...", "Yes");
+    handleSubmit(makeRequest, deletePlaceModal, "Removing...", "Yes", false);
   });
 
   deletePlaceModal.open();
@@ -163,7 +165,7 @@ function handleProfileEditSubmit(profileInputValues) {
       });
   }
 
-  handleSubmit(makeRequest, editProfileModal);
+  handleSubmit(makeRequest, editProfileModal, "Saving...", "Save", false);
 }
 
 /* PATCH Profile Avatar Function */
@@ -174,9 +176,7 @@ function handleAvatarSubmit({ url }) {
     });
   }
 
-  handleSubmit(makeRequest, updateAvatarModal, "Saving...", "Save", () => {
-    updateAvatarModal.setLoading(true, "Save");
-  });
+  handleSubmit(makeRequest, updateAvatarModal, "Saving...", "Save", true);
 }
 
 /* POST Add Place Function */
@@ -198,9 +198,7 @@ function handleNewPlaceSubmit(placeCardData) {
       });
   }
 
-  handleSubmit(makeRequest, addPlaceModal, "Saving...", "Save", () => {
-    addPlaceModal.setLoading(true, "Save");
-  });
+  handleSubmit(makeRequest, addPlaceModal, "Saving...", "Save", true);
 }
 
 /* PUT Add Like React */
